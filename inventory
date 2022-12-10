@@ -1,0 +1,5 @@
+[Debian_Server]
+localhost ansible_connection=local
+
+[CentOS_Server]
+CentOS ansible_host=192.168.56.106

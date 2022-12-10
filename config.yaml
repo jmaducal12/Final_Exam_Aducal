@@ -1,0 +1,34 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (CentOS)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: install updates (Ubuntu)
+    tags: always
+    apt:
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Create a banner motd for remote servers ssh connection
+    copy:
+      content: "Ansible Manage by jmaducal\n"
+      dest: /etc/motd
+
+- hosts: Debian_Server
+  become: true
+  roles:
+    - Debian_Server
+
+- hosts: CentOS_Server
+  become: true
+  roles:
+    - CentOS_Server
+
